@@ -1,4 +1,5 @@
 # Deep Neural Networks Improve Radiologists' Performance in Breast Cancer Screening
+This repo is a fork of https://github.com/nyukat/breast_cancer_classifier with purpose of packaging its content to allow for the trained model to run as Docker container and with input and output as DICOM objects.
 
 ## Introduction
 This is an implementation of the model used for breast cancer classification as described in our paper [Deep Neural Networks Improve Radiologists' Performance in Breast Cancer Screening](https://ieeexplore.ieee.org/document/8861376). The implementation allows users to get breast cancer predictions by applying one of our pretrained models: a model which takes images as input (*image-only*) and a model which takes images and heatmaps as input (*image-and-heatmaps*). 
