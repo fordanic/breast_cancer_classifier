@@ -84,9 +84,9 @@ def run_model(model, device, exam_list, parameters):
                     if parameters["use_heatmaps"]:
                         loaded_heatmaps = loading.load_heatmaps(
                             benign_heatmap_path=os.path.join(parameters["heatmaps_path"], "heatmap_benign",
-                                                             short_file_path + ".hdf5"),
+                                                             short_file_path + image_extension),
                             malignant_heatmap_path=os.path.join(parameters["heatmaps_path"], "heatmap_malignant",
-                                                                short_file_path + ".hdf5"),
+                                                                short_file_path + image_extension),
                             view=view,
                             horizontal_flip=datum["horizontal_flip"],
                         )
@@ -205,7 +205,7 @@ def main():
     parser.add_argument('--use-heatmaps', action="store_true")
     parser.add_argument('--heatmaps-path')
     parser.add_argument('--use-augmentation', action="store_true")
-    parser.add_argument('--use-hdf5', action="store_true")
+    parser.add_argument('--use-hdf5', action="store_false")
     parser.add_argument('--num-epochs', default=1, type=int)
     parser.add_argument('--device-type', default="cpu", choices=['gpu', 'cpu'])
     parser.add_argument("--gpu-number", type=int, default=0)
@@ -223,7 +223,7 @@ def main():
         "num_epochs": args.num_epochs,
         "use_heatmaps": args.use_heatmaps,
         "heatmaps_path": args.heatmaps_path,
-        "use_hdf5": args.use_hdf5,
+        "use_hdf5": False,
         "model_mode": args.model_mode,
         "model_path": args.model_path,
     }

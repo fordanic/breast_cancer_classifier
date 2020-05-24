@@ -170,19 +170,30 @@ def save_heatmaps(heatmap_malignant, heatmap_benign, short_file_path, view, hori
     """
     Saves the heatmaps after flipping back to the original direction
     """
+    image_extension = '.hdf5' if parameters['use_hdf5'] else '.png'
     heatmap_malignant = loading.flip_image(heatmap_malignant, view, horizontal_flip)
     heatmap_benign = loading.flip_image(heatmap_benign, view, horizontal_flip)
     heatmap_save_path_malignant = os.path.join(
         parameters['save_heatmap_path'][0], 
-        short_file_path + '.hdf5'
+        short_file_path + image_extension
     )
-    saving_images.save_image_as_hdf5(heatmap_malignant, heatmap_save_path_malignant)
-
+    if heatmap_save_path_malignant.endswith("png"):
+        saving_images.save_image_as_png(heatmap_malignant, heatmap_save_path_malignant)
+    elif heatmap_save_path_malignant.endswith("hdf5"):
+        saving_images.save_image_as_hdf5(heatmap_malignant, heatmap_save_path_malignant)
+    else:
+        raise RuntimeError()
+    
     heatmap_save_path_benign = os.path.join(
         parameters['save_heatmap_path'][1],
-        short_file_path + '.hdf5'
+        short_file_path + image_extension
     )
-    saving_images.save_image_as_hdf5(heatmap_benign, heatmap_save_path_benign)
+    if heatmap_save_path_benign.endswith("png"):
+        saving_images.save_image_as_png(heatmap_benign, heatmap_save_path_benign)
+    elif heatmap_save_path_benign.endswith("hdf5"):
+        saving_images.save_image_as_hdf5(heatmap_benign, heatmap_save_path_benign)
+    else:
+        raise RuntimeError()
 
 
 def get_image_path(short_file_path, parameters):
@@ -340,7 +351,7 @@ def main():
     parser.add_argument('--seed', default=0, type=int)
     parser.add_argument('--device-type', default="cpu", choices=['gpu', 'cpu'])
     parser.add_argument("--gpu-number", type=int, default=0)
-    parser.add_argument("--use-hdf5", action="store_true")
+    parser.add_argument("--use-hdf5", action="store_false")
     args = parser.parse_args()
 
     parameters = dict(
@@ -365,7 +376,7 @@ def main():
         
         heatmap_type=[0, 1],  # 0: malignant 1: benign 0: nothing
 
-        use_hdf5=args.use_hdf5
+        use_hdf5=False
     )
     random.seed(parameters['seed'])
     model, device = load_model(parameters)
