@@ -2,3 +2,5 @@
 .idea/
 .ipynb_checkpoints
 sample_output/
+data/
+temporary_data/
