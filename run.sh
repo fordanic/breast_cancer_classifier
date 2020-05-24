@@ -113,7 +113,7 @@ python3 src/modeling/run_model.py \
 
 echo 'Stage 5: Convert output to DICOM output'
 python3 src/utilities/convert_results.py \
-    INPUT_DATA_FOLDER \
+    --input-data-folder $INPUT_DATA_FOLDER \
     --heatmaps-path $HEATMAPS_PATH \
     --data-path $EXAM_LIST_PATH \
     --output-data-folder $OUTPUT_DATA_FOLDER
